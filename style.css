@@ -38,8 +38,10 @@ h2 {
 
 .header {
   display: flex;
-  gap: 1em;
-  margin-top: 1em;
+  flex-direction: column; 
+  gap: 1em;             
+  margin-top: 1em;       
+  align-items: center; 
 }
 
 .header img {

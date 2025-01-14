@@ -11,8 +11,108 @@
   <body>
     <h1>Blink Assignment</h1>
     <div class="header">
-      <img src="assignment-placeholder.jpg" />
-      <p>Here is all the documentation for assignment 1!</p>
+
+      <h2>Circuit Gif</h2>
+      <img src="A1_Blink_Video.gif" />
+
+      <h2>Resistor Calculation</h2>
+      <p>To calculate the resistor value for each LED we need to know the voltage drop for red, green and yellow LEDs which are all 1.8V. We also know that 
+        each LED should run at a 20mA current and the Arduino gives 5 volts. Thus we use Ohm's law to calculate the resistor values:</p>
+      <section>
+        <pre><code class="language-c">
+         V = I x R // Ohm's Law 
+         V = V - Vf = 5 - 1.8 = 3.2 V
+         I = 20mA = 0.02A
+         R = V / I = 3.2V / 0.02A = 160Ω
+        </code></pre>
+      </section>
+      <p>I used 220Ω resistors for each LED because it is the closest value greater than 160Ω. Each LED gets it's own digital pin and resistor.</p>
+
+
+      <h2>Circuit Image</h2>
+      <img src="A1_Blink.jpg" />
+
+      <h2>Circuit</h2>
+      <img src="A1_Circut.jpg" />
+
+      <h2>Schematic</h2>
+      <img src="A1_Schematic.jpg" />
+
+      <h2>Arduino Code</h2>
+      <p>Each LED follows its respective blinking pattern. Red LED (Pin 13):
+        Turns on for 1 second and then remains off for 2 seconds in each cycle.
+        Green LED (Pin 12):
+        Blinks twice, with each blink lasting 0.5 seconds, and then stays off for the rest of the cycle.
+        Yellow LED (Pin 8):
+        Turns on for 1 second after the Green LED finishes blinking and then turns off. This pattern repeats continuously.
+      </p>
+      <section>
+        <pre><code class="language-c">
+          // the setup function runs once when you press reset or power the board
+          void setup() {
+            // initialize digital pins as outputs.
+            pinMode(13, OUTPUT); // Red LED 
+            pinMode(12, OUTPUT); // Green LED
+            pinMode(8, OUTPUT);  // Yellow LED 
+          }
+          
+          // the loop function runs over and over again forever creating a blinking pattern 
+          void loop() {
+            // Turns the RED LED on and then off 
+            digitalWrite(13, HIGH);  // turn the red LED on (HIGH is the voltage level)
+            delay(1000);             // wait for a second
+            digitalWrite(13, LOW);   // turn the red LED off by making the voltage LOW
+          
+            // Makes the GREED LED blink twice 
+            digitalWrite(12, HIGH);  // turn the green LED on (HIGH is the voltage level)
+            delay(500);              // wait for a .5 second / 500ms
+            digitalWrite(12, LOW);   // turn the green LED off by making the voltage LOW
+            delay(500);              // wait for a .5 second / 500ms
+            digitalWrite(12, HIGH);  // turn the green LED on (HIGH is the voltage level)
+            delay(500);              // wait for a .5 second / 500ms 
+            digitalWrite(12, LOW);   // turn the green LED off by making the voltage LOW
+          
+            // Turns the YELLOW LED on and then off 
+            digitalWrite(8, HIGH);  // turn the yellow LED on (HIGH is the voltage level)
+            delay(1000);             // wait for a second
+            digitalWrite(8, LOW);   // turn the yellow LED off by making the voltage LOW
+          }
+          
+        </code></pre>
+      </section>
+
+      <h2>Additional Questions</h2>
+
+        <h3>Voltage vs Time Graph</h3>
+        <img src="A1_Graph.jpg" />
+        <p> The arduino digital pins outpus 5V voltages, but the voltage across the 3 LEDs when the LED's output is HIGH is the forward
+          voltage (Vf) which is approximately 1.8V for Red, Green, and Yellow LEDs. </p>
+
+        <h3>Total LEDs </h3>
+        <p style="font-weight: bold;"> How many LEDs could you blink independently with your Arduino? How much current would that draw?</p>
+        <p>There are 13 pin ports in the Arduino, thus you could theoretically connect 13 LEDs independently. But the the maximum current draw
+          of the Arduino is 200mA. If each Arduino pin can safely provide 20mA of current then you can calculate the total limit of LEDs by: 
+        </p>
+        <section>
+          <pre><code class="language-c">
+           200mA / 20mA = 10 LEDs 
+           Current = 10 X 20mA = 200mA 
+          </code></pre>
+        </section>
+        <p>You can blink 10 pins which would draw 200mA of current safely with our Arduinos.</p>
+
+        <h3>Blinking Speed</h3>
+        <p style="font-weight: bold;"> How fast do you need to blink your LEDs until you no longer can tell that they are blinking?</p>
+        <p> People perceive binking at 60HZ which would be 60 blinks per 1 second which is 0.0167 seconds (16.7 milliseconds). Because each 
+          blink cycle consists of an HIGH phase and an LOW phase, each phase to need to last half of 16.7ms. Thus, we would need
+          to blink our LEDs at 8.3ms
+        </p>
+        <section>
+          <pre><code class="language-c">
+           (1 / 60) = 0.0167s = 16.7ms
+           0.0167s / 2 = 0.0083s = 8.3ms
+          </code></pre>
+        </section>
     </div>
   </body>
 </html>
