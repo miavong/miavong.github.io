@@ -90,7 +90,7 @@
 
         <h3>Total LEDs </h3>
         <p style="font-weight: bold;"> How many LEDs could you blink independently with your Arduino? How much current would that draw?</p>
-        <p>There are 13 pin ports in the Arduino, thus you could theoretically connect 13 LEDs independently which would draw 260mA total current. But the the maximum current draw
+        <p>There are 14 pin ports in the Arduino, and you could connect 13 of those to LEDs independently which would draw 260mA total current. But the the maximum current draw
           of the Arduino is 200mA safely. If each Arduino pin can safely provide 20mA of current then you can calculate the total limit of LEDs by: 
         </p>
         <section>
@@ -104,8 +104,8 @@
         <h3>Blinking Speed</h3>
         <p style="font-weight: bold;"> How fast do you need to blink your LEDs until you no longer can tell that they are blinking?</p>
         <p> People perceive binking at 60HZ which would be 60 blinks per 1 second which is 0.0167 seconds (16.7 milliseconds). Because each 
-          blink cycle consists of an HIGH phase and an LOW phase, each phase to need to last half of 16.7ms. Thus, we would need
-          to blink our LEDs at 8.3ms
+          blink cycle consists of an HIGH phase and an LOW phase, each phase would need to last half of 16.7ms. Thus, we would need
+          to blink our LEDs at 8.3ms. Although I would assume anything less than 10ms would not be perceived as blinking for most people.
         </p>
         <section>
           <pre><code class="language-c">
