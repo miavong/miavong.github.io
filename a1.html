@@ -90,8 +90,8 @@
 
         <h3>Total LEDs </h3>
         <p style="font-weight: bold;"> How many LEDs could you blink independently with your Arduino? How much current would that draw?</p>
-        <p>There are 13 pin ports in the Arduino, thus you could theoretically connect 13 LEDs independently. But the the maximum current draw
-          of the Arduino is 200mA. If each Arduino pin can safely provide 20mA of current then you can calculate the total limit of LEDs by: 
+        <p>There are 13 pin ports in the Arduino, thus you could theoretically connect 13 LEDs independently which would draw 260mA total current. But the the maximum current draw
+          of the Arduino is 200mA safely. If each Arduino pin can safely provide 20mA of current then you can calculate the total limit of LEDs by: 
         </p>
         <section>
           <pre><code class="language-c">
@@ -99,7 +99,7 @@
            Current = 10 X 20mA = 200mA 
           </code></pre>
         </section>
-        <p>You can blink 10 pins which would draw 200mA of current safely with our Arduinos.</p>
+        <p>You can blink 10 pins which would draw 200mA of current safely with our Arduinos. But you could theoretically blink 13 LEDs.</p>
 
         <h3>Blinking Speed</h3>
         <p style="font-weight: bold;"> How fast do you need to blink your LEDs until you no longer can tell that they are blinking?</p>
