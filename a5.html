@@ -87,7 +87,8 @@
 
         <h3>Question 1</h3>
         <p>
-          The absolute maximum amount of continous drain current between pins 2 and 3 is 37.2A of a n-mosfet transistor, as found on the datasheet.
+          The absolute maximum amount of continous drain current between pins 2 and 3 is 37.2A of a n-mosfet transistor, as found on the datasheet. However
+          the Maximum Body Diode Forward Current is 80A.
         </p>
     
         <h3>Question 2</h3>
@@ -102,13 +103,13 @@
           flyback diode: https://www.ti.com/lit/ds/symlink/lm5180-q1.pdf?ts=1739844289471&ref_url=https%253A%252F%252Fwww.google.com%252F
         </p>
         <p>
-          capacitor: https://www.mouser.com/c/ds/passive-components/capacitors/?srsltid=AfmBOoqyMgYE2I7XZe_TnHOgK03kRWShnSXSEnYHCWAApxK_4NEAuaZ8
+          capacitor: https://www.mouser.com/datasheet/2/293/e_gxc-3472314.pdf
         </p>
         <h3>Question 3</h3>
         <img src="A5_question3.png"/> 
         <p>
           Pseudo code to move both motors forwards, backwards, one motor forward and one backward, then switch directions 
-          one motor backward, one forward.
+          one motor backward, one forward. L293D chip datasheet: https://www.ti.com/product/L293D
         </p>
         <section>
           <pre><code class="language-c">
