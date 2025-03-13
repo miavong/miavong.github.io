@@ -13,52 +13,125 @@
     <div class="header">
 
       <h2>Demo Video</h2>
-      <div style="padding:56.25% 0 0 0;position:relative;"><iframe 
-        src="https://player.vimeo.com/video/1064414191?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
-        style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-        title="Chug"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/1M_VF2JQow8?si=_gFVIzdwNpd9rQC_" 
+      title="YouTube video player" frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <p><i>Disclaimer: All users that have interacted with this product are over the age of 21.</i></p>
+
 
       <h2>Concept</h2>
       <p> 
         For my final project I want to create an interactive drinking game using a sensory input and the 4-digit 7 segment display as 
-        a timer-like output. The game will track how long it takes someone to chug a beverag and display the result when the beverage is 
+        a timer-like output. The game will track how long it takes someone to chug a beverage and display the result when the beverage is 
         returned to it's designated spot. Red and green LEDs would be used as start and stop indicators for the user to start drinking and
-        also correspond with the start/stop of the timer. Disclaimer: All users that have interacted with this product are over the age of 
-        21. 
+        also correspond with the start/stop of the timer. 
       </p>
+
+      <h2>Bill of Materials </h2>
+      <ul>
+        <li>Arduino</li>
+        <li>Red and Green LEDs (for visually displaying start and stop times)</li>
+        <li>Sensor Red LED (for illuminating sensor) </li>
+        <li>Photoresistor sensor (for tracking can state)</li>
+        <li>4 Digit 7 Segment Display (for displaying time & end-game results)</li>
+        <li>Resistors (for current-limiting)</li>
+        <li>Cardboard (for constructing drink holding container)</li>
+        <li>A beverage (for chugging)</li>
+      </ul>
 
       <h2>Technical Write Up</h2>
+      <p>Chugging game overview: </p>
+      <ul>
+        <li>Red LED on when game is stopped and a can is present (tracking photoresistor value input)</li>
+        <li>When the can is lifted (photoresistor value is over light threshold) is the countdown sequence starts, and green LED turns on </li>
+        <li>Timer starts on 4 digit 7 segment display</li>
+        <li>When can is returned the timer and game stops and Red LED turns on</li>
+        <li>7 seg displays elapsed time for 5 seconds</li>
+        <li>7 seg displays end-sequence message based on elapsed time</li>
+        <li>Game resets to 0.0</li>
+      </ul>
       <p> 
-        technical implementation and your execution
-        Througout building this game, I went through many 
-        I initally thought that I might use a capacitive sensor or photoresistor to detect whether or not the can was placed in it's starting 
-        position or not. 
+        I knew going into this project I would have to experiment different input sensors to determine  
+        whether or not a can was present or not and read the serial monitor output of whatever input device to find 
+        a threshold to determine the can's state to start and stop the game. I first used a capactive sensor underneath the can, which proved to be unsuccessful as the sensor was
+        detecting the presence of my hand picking up the can and spiked the reading. I next tried taping a photoresistor in the box, but the issue here 
+        was I would have to re-calculate the light threshold if the game moved to a darker/brighter enviroment which would be a frustrating user experience.
+        I then played around with a square force-sensative resistor, which can detect the weight of the can. The issue with this sensor was that it's readings
+        were drifting when a can was on the sensor which made it would pose a problem when the user has a can on the sensor and doesnt want to start the game. My classmate Keyvyn  
+        suggested using the can as a gate and blocking light between a LED and photoresistor on either side of the can. This idea would only work 
+        if I could create a controlled dark enviroment inside the box. This was achieved by sectioning off the can-sitting area inside my enclosure box with an additional carboard wall.
+        The interior sensor LED is always on, when the can is in the box it blocks direct light from the LED to the photoresistor and outside enviroment. 
       </p>
-        
-      <h2>Circuit Image</h2>
-      <img src="A6_Circuit.jpg" />
+      <p>
+        When the can is lifted, the sensor LED shines directly at the photoresistor, which will trigger enough light even in a dark room to start the game. 
+        I noted that the serial output from the photoresistor when the can was in the box was around 100 in a dark and light room
+        was around 100 in a dark and light room (proving that I had sucessfuly created a controlled internal enviroment). When the can was out of the box 
+        in a dark room the serial output's minimum value was 200. Thus, I set the light threshold for the game at 150 in the firmware to work in both light and dark playing enviroments. 
+        Using this logic, I used functions to start and stop the game by tracking the sensor state and controlling the timer. Boolean 
+        variables manage game states and transitions as well as displaying start-end messages on the four-digit seven-segment display.
+        When the can is placed back, the game stops, toggling the gameRunning and gameFinished states and triggering a five-second display of the final 
+        time before allowing a reset. The elapsedTime variable records how long it took the user to finish their drink and determines the final performance message. 
+        The messages are displayed as follows:
+      </p>
 
-      <h2>Setup Image</h2>
-      <img src="A6_Circuit.jpg" />
+      <h3> First start-up message</h3>
+      <img src="final_beer.jpg" />
+
+      <h3> Less than 30 seconds </h3>
+      <img src="final_Rad.jpg" />
+
+      <h3> Between 30 seconds and 1 minute </h3>
+      <img src="final_Good.jpg" />
+        
+      <h3> Over 1 minute </h3>
+      <img src="final_Eh.jpg" />
+
+      <h2>Circuit Images</h2>
+      <img src="final_circuit(1).jpg" />
+      <img src="final_circuit(3).jpg" />
+      <img src="final_circuit(2).jpg" />
+
       <p> 
         I had to solder the red and green LEDs to give them extra length to poke through the top of my game box. I also had to solder 
         the photoresistor and red sensor LED to reach the dark sectioned off area where the can sits.
       </p>
 
+      <h2>Setup Assembly</h2>
+      <img src="final_assembly(1).jpg" />
+      <p> 
+        Here is a representation of how the can acts as a gate between the sensor LED and photoresistor, the can blocks light when it is 
+        placed in the box and lets in light when it is picked up - acting as the start/stop of the game.
+      </p>
+      <img src="final_assembly(2).jpg" />
+      <p> 
+        Added a box flush to the bottom of enclosure, just tall enough for photoresistor and sensor not to be blocked. This allows the 
+        can to sit mostly outside of the game. I also added a additional section to the right so that the breadboard could be completely 
+        encolsed.
+      </p>
+      <img src="final_assembly(3).jpg" />
+      <p> 
+        I then cut out holes for the 4 digit 7 segment display, red, and green LEDs and threaded the hardware through the box. The breadboard, 
+        arduino, and all wiring sits in the open section under the box.
+      </p>
+
+      <h2>Final Product</h2>
+      <img src="final_cover_image.jpg" />
+
       <h2>Schematic</h2>
       <img src="final_schematic.png" />
       <p> 
-        Schematic of the 4 digit - 7 segment display, Red, Green, Sensor(Red) LED, and the photoresistor
+        Schematic of the 4 digit 7 segment display, Red, Green, Sensor(Red) LED, and the photoresistor. The 4 digit 7 segment display 
+        used the majority of my digital pins, so I had to use analog pins for all the LEDs.
       </p>
 
       <h2>Resistor Calculation</h2>
       <p>
-        To calculate the resistor value for all the LEDs with a 1.8V voltage drop. Given that a LED should run at a 20mA current and the Arduino gives 5 volts. 
+        I calculated the resistor value for all the LEDs with a 1.8V voltage drop. Given that a LED should run at a 20mA current and the Arduino gives 5 volts. 
         I used 220Ω resistors because it's the closest value greater than 160Ω. I used a 10kΩ resistor in series with my photoresistor in order to use less mA
         and current to conserve power in our circuit. With a 10k resistor I would have 0.5mA current which is a sufficient amount the detect brightness in the controlled
         enviroment inside my box.
-        I also used this datasheet and webpage to pick the 330k resistance of the SevSeg display:
+        I also used this datasheet and webpage to pick the 330k resistors for the SevSeg display on the digital pins:
         https://www.farnell.com/datasheets/2095876.pdf & https://www.instructables.com/Using-a-4-digit-7-segment-display-with-arduino/
 
       </p>
@@ -72,6 +145,7 @@
 
         // Photoresistor
         V = I x R // Ohm's Law
+        R = 10000Ω
         5 = I x 10000 
         I = .0005A = 0.5mA 
         // Chose 10k resistors for the photoresistor
@@ -79,8 +153,9 @@
       </pre>
       
       <h2>Arduino Code</h2>
-      <p><i>Cited example and github code: SevSeg - https://github.com/DeanIsMe/SevSeg?tab=readme-ov-file#hardware, 
-        Timer Example - https://wokwi.com/projects/344891439152366164, Blink without delay - https://docs.arduino.cc/built-in-examples/digital/BlinkWithoutDelay/ </i></p>
+      <p><i>Cited example and github code: SevSeg Library - https://github.com/DeanIsMe/SevSeg?tab=readme-ov-file#hardware, 
+        SevSeg Timer Example - https://wokwi.com/projects/344891439152366164, 
+        Blink Without Delay - https://docs.arduino.cc/built-in-examples/digital/BlinkWithoutDelay/ </i></p>
       <section>
         <pre><code class="language-c">
             #include &lt;SevSeg.h&gt;  // Include the SevSeg library from https://github.com/DeanIsMe/SevSeg?tab=readme-ov-file#hardware
@@ -92,14 +167,14 @@
                 int redLED = A2;    // Red LED pin
                 const int sensorPin = A0; // Photoresistor sensor pin
                 
-                const long lightThreshold = 150;  // Adjusted light threshold from serial monitor 
+                const long lightThreshold = 150;  // Adjusted light threshold derived from testing with serial monitor 
                 bool lastCanState = false;  // Track the previous can state 
-                bool gameRunning = false; // Tracks whether the game is running, initially set to false
+                bool gameRunning = false; // Tracks whether the game is running, initially set to false (not running)
                 bool gameFinished = false; // Prevents immediate restart after finishing the game
                 
-                // Assign variables 
+                // Assign variables for game 
                 unsigned long startTime = 0; // Set when the game starts, used to track elapsed time
-                unsigned long elapsedTime = 0; // Continuously updated time while running
+                unsigned long elapsedTime = 0; // Continuously update time while game running
                 unsigned long displayStartTime = 0; // Track how long the final time has been displayed before resetting
                 
                 void setup() {
@@ -109,15 +184,15 @@
                   byte numDigits = 4;
                   byte digitPins[] = {2, 3, 4, 5};
                   byte segmentPins[] = {6, 7, 8, 9, 10, 11, 12, 13};
-                  bool resistorsOnSegments = false;
-                  byte hardwareConfig = COMMON_CATHODE;
+                  bool resistorsOnSegments = false; // I put my resistors on digit pins instead of segment 
+                  byte hardwareConfig = COMMON_CATHODE; 
                   bool updateWithDelays = false;
                   bool leadingZeros = false;
-                  bool disableDecPoint = false;
+                  bool disableDecPoint = false; // Using decimal point 
                   
                   sevseg.begin(hardwareConfig, numDigits, digitPins, segmentPins, resistorsOnSegments,
                   updateWithDelays, leadingZeros, disableDecPoint);
-                  sevseg.setBrightness(80); // Recommended brightness
+                  sevseg.setBrightness(80); // Recommended brightness from library 
                 
                   // Initialize LEDs as outputs 
                   pinMode(greenLED, OUTPUT); 
@@ -130,7 +205,7 @@
                 }
                 
                 void loop() {
-                  digitalWrite(sensorLED, HIGH); // Internal sensor LED is always on
+                  digitalWrite(sensorLED, HIGH); // Keep internal sensor LED is always on
                   long sensorValue = analogRead(sensorPin);  // Read photoresistor sensor value
                 
                   // If the sensor value is less than the calculated threshold (ie. dark inside the box) the can is on 
@@ -141,16 +216,16 @@
                     startGame(); // See function below
                   }
                 
-                  // Detect when can is back and the game is still running stop the game 
+                  // Detect when can is back and if the game is still running stop the game 
                   if (!lastCanState && canOn && gameRunning) {
                     stopGame(); // See function below 
                   }
                 
                   lastCanState = canOn;  // Store the last sensor state for the next game 
                 
+                  // Code adapted from timer example: https://wokwi.com/projects/344891439152366164 (from github, must be in loop)
                   // Update timer display while game is running
                   if (gameRunning) {
-                    // Code adapted from timer example: https://wokwi.com/projects/344891439152366164 (from github, must be in loop)
                     unsigned long currentTime = millis(); 
                     elapsedTime = (currentTime - startTime) / 100; // Convert to deciseconds
                     sevseg.setNumber(elapsedTime, 1); // Continuously update display
